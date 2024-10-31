@@ -1,0 +1,673 @@
+PARSER_BEGIN(Analizador_Lexico)
+import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+
+class Analizador_Lexico
+{
+	public static void main (String[] args) throws ParseException{
+	try
+	{
+        System.out.println("----------------------------------------- Iniciando escaneo -----------------------------------------");
+		Analizador_Lexico compilador = new Analizador_Lexico (System.in);
+		compilador.analizar();
+		System.out.println("----------------------------------------- Ejecucion Exitosa -----------------------------------------");
+	}catch(ParseException e)
+	{
+		System.out.println(e.getMessage());
+		System.out.println("----------------------------------------- Ha ocurrido un error -----------------------------------------");
+	}
+  }
+}
+PARSER_END(Analizador_Lexico)
+
+SPECIAL_TOKEN:
+{
+	<#DIGITO:(["0"-"9"])>
+    |<#NUMERO:(<DIGITO>)+>
+	|<#DECIMAL:<NUMERO>(".")?<NUMERO>>
+	|<#LETRA:(["a"-"z","A"-"Z"])+>
+    |<#CADENA:<LETRA>|<NUMERO>|<DECIMAL>|[" "]>
+}
+
+SKIP :
+{
+    " " | "\t" | "\n" | "\r"
+}
+TOKEN:
+{
+    <comentarios_unilinea:("//" | "#" | "--" )(<CADENA>)*>
+
+}
+TOKEN:
+{
+    <comentarios_multilinea:(("/*")(<CADENA>)*("*/"))*>
+}
+TOKEN:
+{
+    <condicion_if: ("if")> {System.out.println("condicion_if");}
+}
+TOKEN:
+{
+    <condicion_elif:("elif")> {System.out.println("condicion_elif");}
+}
+TOKEN:
+{
+    <contracondicion:("else")> {System.out.println("contracondicion");}
+}
+TOKEN:
+{
+    <condicion_switch:("switch")> {System.out.println("condicion_switch");}
+}
+TOKEN:
+{
+    <condicion_while:("while")> {System.out.println("condicion_while");}
+}
+TOKEN:
+{
+    <ciclo_do:("do")> {System.out.println("ciclo_do");}
+}
+TOKEN:
+{
+    <ciclo_for:("for")> {System.out.println("ciclo_for");}
+}
+TOKEN:
+{
+    <ciclo_foreach:("foreach")> {System.out.println("ciclo_foreach");}
+}
+TOKEN:
+{
+    <romper_ciclo:("break")> {System.out.println("romper_ciclo");}
+}
+TOKEN:
+{
+    <continuar_siguiente_iteracion:("continue")> {System.out.println("continuar_siguiente_iteracion");}
+}
+TOKEN:
+{
+    <caso_switch:("case")> {System.out.println("caso_switch");}
+}
+TOKEN:
+{
+    <caso_predefinido:("predef")> {System.out.println("caso_predefinido");}
+}
+TOKEN:
+{
+    <llave_izq:("{")> {System.out.println("llave_izq");}
+}
+TOKEN:
+{
+    <llave_der:("}")> {System.out.println("llave_der");}
+}
+TOKEN:
+{
+    <parentesis_izq:("(")> {System.out.println("parentesis_izq");}
+}
+TOKEN:
+{
+    <parentesis_der:(")")> {System.out.println("parentesis_der");}
+}
+TOKEN:
+{
+    <corchete_izq:("[")> {System.out.println("corchete_izq");}
+}
+TOKEN:
+{
+    <corchete_der:("]")> {System.out.println("corchete_der");}
+}
+TOKEN:
+{
+    <tipo_dato:("int"|"string"|"double"|"char"|"bool")> {System.out.println("tipo_dato, " + image);}
+}
+TOKEN:
+{
+    <valor_booleano:("true"|"false")> {System.out.println("valor_booleano, " + image);}
+}
+TOKEN:
+{
+    <valor_nulo:("none")> {System.out.println("valor_nulo");}
+}
+TOKEN:
+{
+    <operador_aritmetico:("+"|"-"|"*"|"/"|"**")> {System.out.println("operador_aritmetico, " + image);}
+}
+TOKEN:
+{
+    <operador_asignacion:("="|"+="|"-="|"*="|"/="|"**="|"//=")> {System.out.println("operador_asignacion, " + image);}
+}
+TOKEN:
+{
+    <operador_relacional:(">"|"<"|"<="|">="|"=="|"!=")> {System.out.println("operador_relacional, " + image);}
+}
+TOKEN:
+{
+    <operador_logico:("&&"|"||"|"$$"|"and"|"or"|"not")> {System.out.println("operador_logico, " + image);}
+}
+TOKEN:
+{
+    <operador_pertenencia:("in"|"not in")> {System.out.println("operador_pertenencia, " + image);}
+}
+TOKEN:
+{
+    <operador_identidad:("is"|"is not")> {System.out.println("operador_identidad, " + image);}
+}
+TOKEN:
+{
+    <definir_lista:("list")> {System.out.println("definir_lista");}
+}
+TOKEN:
+{
+    <funcion_cadena:("toUpper"|"toLower")> {System.out.println("funcion_cadena, " + image);}
+}
+TOKEN:
+{
+    <funcion_matematica:("round"|"truncate"|"random"|"log"|"log10"|"max"|"min"|"abs"|"sum"|"sin"|"cos"|"tan"|"asin"|"acos"|"atan")> {System.out.println("funcion_matematica, " + image);}
+}
+TOKEN:
+{
+    <funcion_generar_progresiones:("range")> {System.out.println("funcion_generar_progresiones");}
+}
+TOKEN:
+{
+    <funcion_lista:("append"|"insert"|"remove"|"pop"|"clear"|"index"|"count"|"sort"|"reverse"|"copy"|"len")> {System.out.println("funcion_lista, " + image);}
+}
+TOKEN:
+{
+    <definir_clase:("class")> {System.out.println("definir_clase");}
+}
+TOKEN:
+{
+    <definir_funcion:("def")> {System.out.println("definir_funcion");}
+}
+TOKEN:
+{
+    <funcion_anonima:("lambda")> {System.out.println("funcion_anonima");}
+}
+TOKEN:
+{
+    <retornar_valor:("return"|"yield")> {System.out.println("retornar_valor, " + image);}
+}
+TOKEN:
+{
+    <funcion_vacia:("void")> {System.out.println("funcion_vacia");}
+}
+TOKEN:
+{
+    <importar_libreria:("import")> {System.out.println("importar_libreria");}
+}
+TOKEN:
+{
+    <importar_parte_libreria:("from")> {System.out.println("importar_parte_libreria");}
+}
+TOKEN:
+{
+    <alias_libreria:("as")> {System.out.println("alias_libreria");}
+}
+TOKEN:
+{
+    <salida_datos:("print")> {System.out.println("salida_datos");}
+}
+TOKEN:
+{
+    <entrada_datos:("input")> {System.out.println("entrada_datos");}
+}
+TOKEN:
+{
+    <condicion_excepcion:("try")> {System.out.println("condicion_excepcion");}
+}
+TOKEN:
+{
+    <capturar_excepcion:("catch")> {System.out.println("capturar_excepcion");}
+}
+TOKEN:
+{
+    <crear_excepcion:("except")> {System.out.println("crear_excepcion");}
+}
+TOKEN:
+{
+    <finalizar_excepcion:("finally")> {System.out.println("finalizar_excepcion");}
+}
+TOKEN:
+{
+    <coma:(",")> {System.out.println("coma");}
+}
+TOKEN:
+{
+    <punto_coma:(";")> {System.out.println("punto_coma");}
+}
+TOKEN:
+{
+    <definir_herencia:(":")> {System.out.println("definir_herencia");}
+}
+TOKEN:
+{
+    <tipo_herencia:("extends"|"self"|"parent")> {System.out.println("tipo_herencia, " + image);}
+}
+TOKEN:
+{
+    <comillas_dobles:("\"")> {System.out.println("comillas_dobles");}
+}
+TOKEN:
+{
+    <comillas_simples:("'")> {System.out.println("comillas_simples");}
+}
+TOKEN:
+{
+    <tipo_acceso:("public"|"private"|"protected")> {System.out.println("tipo_acceso, " + image);}
+}
+TOKEN:
+{
+    <tipo_variable:("local"|"global")> {System.out.println("tipo_variable, " + image);}
+}
+TOKEN:
+{
+    <crear_instancia:("new")> {System.out.println("crear_instancia");}
+}
+TOKEN:
+{
+    <borrar_instancia:("delete")> {System.out.println("borrar_instancia");}
+}
+TOKEN:
+{
+    <representar_instancia:("this")> {System.out.println("representar_instancia");}
+}
+TOKEN:
+{
+    <tipo_clase:("abstract"|"static"|"interface"|"enum")> {System.out.println("tipo_clase, " + image);}
+}
+TOKEN:
+{
+    <sobreescribir_funcion:("override")> {System.out.println("sobreescribir_funcion");}
+}
+TOKEN:
+{
+    <metodo_asincrono:("async")> {System.out.println("metodo_asincrono");}
+}
+TOKEN:
+{
+    <omitir_excepcion:("throw"|"throws")> {System.out.println("omitir_excepcion, " + image);}
+}
+TOKEN:
+{
+    <esperar_asincrono:("await")> {System.out.println("esperar_asincrono");}
+}
+TOKEN:
+{
+    <despues:("then")> {System.out.println("despues");}
+}
+TOKEN:
+{
+    <constante:("const")> {System.out.println("constante");}
+}
+TOKEN:
+{
+    <variable:("var")> {System.out.println("variable");}
+}
+TOKEN:
+{
+    <tamanio:("size")> {System.out.println("tamanio");}
+}
+TOKEN:
+{
+    <referencia:("ref")> {System.out.println("referencia");}
+}
+TOKEN:
+{
+    <delegado:("delegate")> {System.out.println("delegado");}
+}
+TOKEN:
+{
+    <solo_lectura:("readonly")> {System.out.println("solo_lectura");}
+}
+TOKEN:
+{
+    <acceso_multiple:("volatile")> {System.out.println("acceso_multiple");}
+}
+TOKEN:
+{
+    <seleccion:("SELECT")> {System.out.println("seleccion");}
+}
+TOKEN:
+{
+    <crear:("CREATE")> {System.out.println("crear");}
+}
+TOKEN:
+{
+    <eliminar:("DROP"|"DELETE")> {System.out.println("eliminar, " + image);}
+}
+TOKEN:
+{
+    <crear_tabla:("TABLE")> {System.out.println("crear_tabla");}
+}
+TOKEN:
+{
+    <crear_basedatos:("DATABASE")> {System.out.println("crear_basedatos");}
+}
+TOKEN:
+{
+    <insertar:("INSERT")> {System.out.println("insertar");}
+}
+TOKEN:
+{
+    <asociar:("JOIN")> {System.out.println("asociar");}
+}
+TOKEN:
+{
+    <dentro:("INTO")> {System.out.println("dentro");}
+}
+TOKEN:
+{
+    <comprobar_existencia:("EXISTS")> {System.out.println("comprobar_existencia");}
+}
+TOKEN:
+{
+    <valor:("VALUE")> {System.out.println("valor");}
+}
+TOKEN:
+{
+    <establecer:("SET")> {System.out.println("establecer");}
+}
+TOKEN:
+{
+    <actualizar:("UPDATE")> {System.out.println("actualizar");}
+}
+TOKEN:
+{
+    <desde:("FROM")> {System.out.println("desde");}
+}
+TOKEN:
+{
+    <llave:("KEY")> {System.out.println("llave");}
+}
+TOKEN:
+{
+    <primario:("PRIMARY")> {System.out.println("primario");}
+}
+TOKEN:
+{
+    <nulo:("NULL")> {System.out.println("nulo");}
+}
+TOKEN:
+{
+    <motor:("ENGINE")> {System.out.println("motor");}
+}
+TOKEN:
+{
+    <unico:("UNIQUE")> {System.out.println("unico");}
+}
+TOKEN:
+{
+    <codificar_caracter:("CHARSET")> {System.out.println("codificar_caracter");}
+}
+TOKEN:
+{
+    <izquierda:("LEFT")> {System.out.println("izquierda");}
+}
+TOKEN:
+{
+    <derecha:("RIGHT")> {System.out.println("derecha");}
+}
+TOKEN:
+{
+    <foraneo:("FOREIGN")> {System.out.println("foraneo");}
+}
+TOKEN:
+{
+    <cuando:("WHEN")> {System.out.println("cuando");}
+}
+TOKEN:
+{
+    <de:("BY")> {System.out.println("de");}
+}
+TOKEN:
+{
+    <evento:("EVENT")> {System.out.println("evento");}
+}
+TOKEN:
+{
+    <orden:("ORDER")> {System.out.println("orden");}
+}
+TOKEN:
+{
+    <orden_por:("ORDERBY")> {System.out.println("orden_por");}
+}
+TOKEN:
+{
+    <ascendente:("ASC")> {System.out.println("ascendente");}
+}
+TOKEN:
+{
+    <descendente:("DESC")> {System.out.println("descendente");}
+}
+TOKEN:
+{
+    <iniciador:("BEGIN")> {System.out.println("iniciador");}
+}
+TOKEN:
+{
+    <finalizador:("END")> {System.out.println("finalizador");}
+}
+TOKEN:
+{
+    <reiniciar:("RESET")> {System.out.println("reiniciar");}
+}
+TOKEN:
+{
+    <componente_visual:(
+        "Border"
+        |"Button"
+        |"Calendar"
+        |"Canvas"
+        |"CheckBox"
+        |"ComboBox"
+        |"ContentControl"
+        |"DataGrid"
+        |"DatePicker"
+        |"DockPanel"
+        |"DocumentViewer"
+        |"Ellipse"
+        |"Expander"
+        |"Frame"
+        |"Grid"
+        |"GridSplitter"
+        |"GroupBox"
+        |"Image"
+        |"Label"
+        |"ListBox"
+        |"ListView"
+        |"MediaElement"
+        |"Menu"
+        |"PasswordBox"
+        |"ProgressBar"
+        |"RadioButton"
+        |"Rectangle"
+        |"RichTextBox"
+        |"ScrollBar"
+        |"Slider"
+        |"StackPanel"
+        |"StatusBar"
+        |"TabControl"
+        |"TextBlock"
+        |"TextBox"
+        |"ToolBar"
+        |"ToolBarPanel"
+        |"ToolBarTray"
+        |"TreeView"
+        |"ViewBox"
+        |"WebBrowser"
+        |"WindowsFormHost"
+        |"WrapPanel"
+        )> {System.out.println("componente_visual, " + image);}
+}
+TOKEN:
+{
+    <propiedad_componente:(
+        "IsEnabled"
+        |"Visibility"
+        |"Background"
+        |"BorderBrush"
+        |"BorderThickness"
+        |"Foreground"
+        |"Selected"
+        |"Opacity"
+        |"Width"
+        |"Height"
+        |"MinHeight"
+        |"MaxHeight"
+        |"MinWidth"
+        |"MaxWidth"
+        |"Margin"
+        |"HorizontalAlignment"
+        |"VerticalAlignment"
+        |"Padding"
+        |"FontFamily"
+        |"FontSize"
+        |"FontWight"
+        |"FontStrengh"
+        |"FontStyle"
+        |"TabIndex"
+        |"ToolTip"
+        |"Name"
+        |"Focusable"
+        )> {System.out.println("propiedad_componente, " + image);}
+}
+TOKEN:
+{
+    <Numero:(<NUMERO>|<DECIMAL>)*>{System.out.println("Numero, "+image);}
+}
+TOKEN:
+{
+	<Id:<LETRA>(<LETRA>|<NUMERO>)*>
+}
+void analizar():
+{
+    Token a;
+    ArrayList<String> id_List = new ArrayList<String>();
+}
+
+{
+	(
+    <condicion_if>
+    |<condicion_elif>
+    |<contracondicion>
+    |<condicion_switch>
+    |<condicion_while>
+    |<ciclo_do>
+    |<ciclo_for>
+    |<ciclo_foreach>
+    |<romper_ciclo>
+    |<continuar_siguiente_iteracion>
+    |<caso_switch>
+    |<caso_predefinido>
+    |<llave_izq>
+    |<llave_der>
+    |<parentesis_izq>
+    |<parentesis_der>
+    |<corchete_izq>
+    |<corchete_der>
+    |<tipo_dato>
+    |<valor_booleano>
+    |<valor_nulo>
+    |<operador_aritmetico>
+    |<operador_asignacion>
+    |<operador_relacional>
+    |<operador_logico>
+    |<operador_pertenencia>
+    |<operador_identidad>
+    |<definir_lista>
+    |<funcion_cadena>
+    |<funcion_matematica>
+    |<funcion_generar_progresiones>
+    |<funcion_lista>
+    |<definir_clase>
+    |<definir_funcion>
+    |<funcion_anonima>
+    |<retornar_valor>
+    |<funcion_vacia>
+    |<importar_libreria>
+    |<importar_parte_libreria>
+    |<alias_libreria>
+    |<salida_datos>
+    |<entrada_datos>
+    |<condicion_excepcion>
+    |<capturar_excepcion>
+    |<crear_excepcion>
+    |<finalizar_excepcion>
+    |<coma>
+    |<punto_coma>
+    |<definir_herencia>
+    |<tipo_herencia>
+    |<comillas_dobles>
+    |<comillas_simples>
+    |<tipo_acceso>
+    |<tipo_variable>
+    |<crear_instancia>
+    |<borrar_instancia>
+    |<representar_instancia>
+    |<tipo_clase>
+    |<sobreescribir_funcion>
+    |<metodo_asincrono>
+    |<omitir_excepcion>
+    |<esperar_asincrono>
+    |<despues>
+    |<constante>
+    |<variable>
+    |<tamanio>
+    |<referencia>
+    |<delegado>
+    |<solo_lectura>
+    |<acceso_multiple>
+    |<seleccion>
+    |<crear>
+    |<eliminar>
+    |<crear_tabla>
+    |<crear_basedatos>
+    |<insertar>
+    |<asociar>
+    |<dentro>
+    |<comprobar_existencia>
+    |<valor>
+    |<establecer>
+    |<actualizar>
+    |<desde>
+    |<llave>
+    |<primario>
+    |<nulo>
+    |<motor>
+    |<unico>
+    |<codificar_caracter>
+    |<izquierda>
+    |<derecha>
+    |<foraneo>
+    |<cuando>
+    |<de>
+    |<evento>
+    |<orden>
+    |<orden_por>
+    |<ascendente>
+    |<descendente>
+    |<iniciador>
+    |<finalizador>
+    |<reiniciar>
+    |<componente_visual>
+    |<propiedad_componente>
+    |<comentarios_unilinea>
+    |<comentarios_multilinea>
+    |<Numero>
+    |a=<Id>
+
+    {
+
+        if(id_List.contains(a.image)==false)
+        {
+            id_List.add(a.image);
+            System.out.println("id, " + "(" + id_List.indexOf(a.image) + ")");
+        }
+        else
+        {
+            System.out.println("id, " + "(" + id_List.indexOf(a.image) + ")");
+        }
+
+    }
+    )+<EOF>
+}
