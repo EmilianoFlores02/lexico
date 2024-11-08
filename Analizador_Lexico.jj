@@ -8,14 +8,12 @@ class Analizador_Lexico
 	public static void main (String[] args) throws ParseException{
 	try
 	{
-        System.out.println("----------------------------------------- Iniciando escaneo -----------------------------------------");
 		Analizador_Lexico compilador = new Analizador_Lexico (System.in);
 		compilador.analizar();
-		System.out.println("----------------------------------------- Ejecucion Exitosa -----------------------------------------");
 	}catch(ParseException e)
 	{
 		System.out.println(e.getMessage());
-		System.out.println("----------------------------------------- Ha ocurrido un error -----------------------------------------");
+		System.out.println("ERROR");
 	}
   }
 }
@@ -450,86 +448,6 @@ TOKEN:
 TOKEN:
 {
     <reiniciar:("RESET")> {System.out.println("reiniciar");}
-}
-TOKEN:
-{
-    <componente_visual:(
-        "Border"
-        |"Button"
-        |"Calendar"
-        |"Canvas"
-        |"CheckBox"
-        |"ComboBox"
-        |"ContentControl"
-        |"DataGrid"
-        |"DatePicker"
-        |"DockPanel"
-        |"DocumentViewer"
-        |"Ellipse"
-        |"Expander"
-        |"Frame"
-        |"Grid"
-        |"GridSplitter"
-        |"GroupBox"
-        |"Image"
-        |"Label"
-        |"ListBox"
-        |"ListView"
-        |"MediaElement"
-        |"Menu"
-        |"PasswordBox"
-        |"ProgressBar"
-        |"RadioButton"
-        |"Rectangle"
-        |"RichTextBox"
-        |"ScrollBar"
-        |"Slider"
-        |"StackPanel"
-        |"StatusBar"
-        |"TabControl"
-        |"TextBlock"
-        |"TextBox"
-        |"ToolBar"
-        |"ToolBarPanel"
-        |"ToolBarTray"
-        |"TreeView"
-        |"ViewBox"
-        |"WebBrowser"
-        |"WindowsFormHost"
-        |"WrapPanel"
-        )> {System.out.println("componente_visual, " + image);}
-}
-TOKEN:
-{
-    <propiedad_componente:(
-        "IsEnabled"
-        |"Visibility"
-        |"Background"
-        |"BorderBrush"
-        |"BorderThickness"
-        |"Foreground"
-        |"Selected"
-        |"Opacity"
-        |"Width"
-        |"Height"
-        |"MinHeight"
-        |"MaxHeight"
-        |"MinWidth"
-        |"MaxWidth"
-        |"Margin"
-        |"HorizontalAlignment"
-        |"VerticalAlignment"
-        |"Padding"
-        |"FontFamily"
-        |"FontSize"
-        |"FontWight"
-        |"FontStrengh"
-        |"FontStyle"
-        |"TabIndex"
-        |"ToolTip"
-        |"Name"
-        |"Focusable"
-        )> {System.out.println("propiedad_componente, " + image);}
 }
 TOKEN:
 {
