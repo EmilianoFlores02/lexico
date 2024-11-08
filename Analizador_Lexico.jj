@@ -43,15 +43,11 @@ TOKEN:
 }
 TOKEN:
 {
-    <condicion_if: ("if")> {System.out.println("condicion_if");}
+    <pregunta: ("if" | "elif")> {System.out.println("pregunta");}
 }
 TOKEN:
 {
-    <condicion_elif:("elif")> {System.out.println("condicion_elif");}
-}
-TOKEN:
-{
-    <contracondicion:("else")> {System.out.println("contracondicion");}
+    <alternativa:("else")> {System.out.println("alternativa");}
 }
 TOKEN:
 {
@@ -59,35 +55,15 @@ TOKEN:
 }
 TOKEN:
 {
-    <condicion_while:("while")> {System.out.println("condicion_while");}
+    <ciclo:("while" | "do" | "for" | "foreach")> {System.out.println("ciclo");}
 }
 TOKEN:
 {
-    <ciclo_do:("do")> {System.out.println("ciclo_do");}
-}
-TOKEN:
-{
-    <ciclo_for:("for")> {System.out.println("ciclo_for");}
-}
-TOKEN:
-{
-    <ciclo_foreach:("foreach")> {System.out.println("ciclo_foreach");}
-}
-TOKEN:
-{
-    <romper_ciclo:("break")> {System.out.println("romper_ciclo");}
-}
-TOKEN:
-{
-    <continuar_siguiente_iteracion:("continue")> {System.out.println("continuar_siguiente_iteracion");}
+    <detener_ciclo:("break")> {System.out.println("detener_ciclo");}
 }
 TOKEN:
 {
     <caso_switch:("case")> {System.out.println("caso_switch");}
-}
-TOKEN:
-{
-    <caso_predefinido:("predef")> {System.out.println("caso_predefinido");}
 }
 TOKEN:
 {
@@ -135,7 +111,7 @@ TOKEN:
 }
 TOKEN:
 {
-    <operador_relacional:(">"|"<"|"<="|">="|"=="|"!=")> {System.out.println("operador_relacional, " + image);}
+    <operador_comparativo:(">"|"<"|"<="|">="|"=="|"!=")> {System.out.println("operador_comparativo, " + image);}
 }
 TOKEN:
 {
@@ -143,19 +119,7 @@ TOKEN:
 }
 TOKEN:
 {
-    <operador_pertenencia:("in"|"not in")> {System.out.println("operador_pertenencia, " + image);}
-}
-TOKEN:
-{
-    <operador_identidad:("is"|"is not")> {System.out.println("operador_identidad, " + image);}
-}
-TOKEN:
-{
     <definir_lista:("list")> {System.out.println("definir_lista");}
-}
-TOKEN:
-{
-    <funcion_cadena:("toUpper"|"toLower")> {System.out.println("funcion_cadena, " + image);}
 }
 TOKEN:
 {
@@ -163,7 +127,7 @@ TOKEN:
 }
 TOKEN:
 {
-    <funcion_generar_progresiones:("range")> {System.out.println("funcion_generar_progresiones");}
+    <rango:("range")> {System.out.println("rango");}
 }
 TOKEN:
 {
@@ -179,11 +143,7 @@ TOKEN:
 }
 TOKEN:
 {
-    <funcion_anonima:("lambda")> {System.out.println("funcion_anonima");}
-}
-TOKEN:
-{
-    <retornar_valor:("return"|"yield")> {System.out.println("retornar_valor, " + image);}
+    <retornar_valor:("return")> {System.out.println("retornar_valor, " + image);}
 }
 TOKEN:
 {
