@@ -440,6 +440,10 @@ TOKEN:
 }
 TOKEN:
 {
+    <tipo_imagen:("png"|"gif"|"jpg")> {System.out.println("tipo_dato, " + image);}
+}
+TOKEN:
+{
     <Numero:(<NUMERO>|<DECIMAL>)*>{System.out.println("Numero, "+image);}
 }
 TOKEN:
