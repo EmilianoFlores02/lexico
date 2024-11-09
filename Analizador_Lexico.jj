@@ -8,14 +8,13 @@ class Analizador_Lexico
 	public static void main (String[] args) throws ParseException{
 	try
 	{
-        System.out.println("----------------------------------------- Iniciando escaneo -----------------------------------------");
+        System.out.println("   TOKEN    |    LEXEMA");
 		Analizador_Lexico compilador = new Analizador_Lexico (System.in);
 		compilador.analizar();
-		System.out.println("----------------------------------------- Ejecucion Exitosa -----------------------------------------");
 	}catch(ParseException e)
 	{
 		System.out.println(e.getMessage());
-		System.out.println("----------------------------------------- Ha ocurrido un error -----------------------------------------");
+		System.out.println(" ERROR ");
 	}
   }
 }
@@ -37,7 +36,6 @@ SKIP :
 TOKEN:
 {
     <comentarios_unilinea:("//" | "#" | "--" )(<CADENA>)*>
-
 }
 TOKEN:
 {
@@ -117,11 +115,15 @@ TOKEN:
 }
 TOKEN:
 {
+    <puntuacion:("."|","|":"|";"|"?"|"!")> {System.out.println("puntuacion, " + image);}
+}
+TOKEN:
+{
     <tipo_dato:("int"|"string"|"double"|"char"|"bool")> {System.out.println("tipo_dato, " + image);}
 }
 TOKEN:
 {
-    <valor_booleano:("true"|"false")> {System.out.println("valor_booleano, " + image);}
+    <booleano:("true"|"false")> {System.out.println("booleano, " + image);}
 }
 TOKEN:
 {
@@ -133,23 +135,15 @@ TOKEN:
 }
 TOKEN:
 {
-    <operador_asignacion:("="|"+="|"-="|"*="|"/="|"**="|"//=")> {System.out.println("operador_asignacion, " + image);}
+    <operador_asignacion:("=")> {System.out.println("operador_asignacion");}
 }
 TOKEN:
 {
-    <operador_relacional:(">"|"<"|"<="|">="|"=="|"!=")> {System.out.println("operador_relacional, " + image);}
+    <operador_comparacion:(">"|"<"|"<="|">="|"=="|"!=")> {System.out.println("operador_relacional, " + image);}
 }
 TOKEN:
 {
     <operador_logico:("&&"|"||"|"$$"|"and"|"or"|"not")> {System.out.println("operador_logico, " + image);}
-}
-TOKEN:
-{
-    <operador_pertenencia:("in"|"not in")> {System.out.println("operador_pertenencia, " + image);}
-}
-TOKEN:
-{
-    <operador_identidad:("is"|"is not")> {System.out.println("operador_identidad, " + image);}
 }
 TOKEN:
 {
@@ -165,10 +159,6 @@ TOKEN:
 }
 TOKEN:
 {
-    <funcion_generar_progresiones:("range")> {System.out.println("funcion_generar_progresiones");}
-}
-TOKEN:
-{
     <funcion_lista:("append"|"insert"|"remove"|"pop"|"clear"|"index"|"count"|"sort"|"reverse"|"copy"|"len")> {System.out.println("funcion_lista, " + image);}
 }
 TOKEN:
@@ -181,11 +171,7 @@ TOKEN:
 }
 TOKEN:
 {
-    <funcion_anonima:("lambda")> {System.out.println("funcion_anonima");}
-}
-TOKEN:
-{
-    <retornar_valor:("return"|"yield")> {System.out.println("retornar_valor, " + image);}
+    <retornar_valor:("return")> {System.out.println("retornar_valor");}
 }
 TOKEN:
 {
@@ -226,18 +212,6 @@ TOKEN:
 TOKEN:
 {
     <finalizar_excepcion:("finally")> {System.out.println("finalizar_excepcion");}
-}
-TOKEN:
-{
-    <coma:(",")> {System.out.println("coma");}
-}
-TOKEN:
-{
-    <punto_coma:(";")> {System.out.println("punto_coma");}
-}
-TOKEN:
-{
-    <definir_herencia:(":")> {System.out.println("definir_herencia");}
 }
 TOKEN:
 {
@@ -453,87 +427,24 @@ TOKEN:
 }
 TOKEN:
 {
-    <componente_visual:(
-        "Border"
-        |"Button"
-        |"Calendar"
-        |"Canvas"
-        |"CheckBox"
-        |"ComboBox"
-        |"ContentControl"
-        |"DataGrid"
-        |"DatePicker"
-        |"DockPanel"
-        |"DocumentViewer"
-        |"Ellipse"
-        |"Expander"
-        |"Frame"
-        |"Grid"
-        |"GridSplitter"
-        |"GroupBox"
-        |"Image"
-        |"Label"
-        |"ListBox"
-        |"ListView"
-        |"MediaElement"
-        |"Menu"
-        |"PasswordBox"
-        |"ProgressBar"
-        |"RadioButton"
-        |"Rectangle"
-        |"RichTextBox"
-        |"ScrollBar"
-        |"Slider"
-        |"StackPanel"
-        |"StatusBar"
-        |"TabControl"
-        |"TextBlock"
-        |"TextBox"
-        |"ToolBar"
-        |"ToolBarPanel"
-        |"ToolBarTray"
-        |"TreeView"
-        |"ViewBox"
-        |"WebBrowser"
-        |"WindowsFormHost"
-        |"WrapPanel"
-        )> {System.out.println("componente_visual, " + image);}
+    <color:(
+        "Rojo" | "Verde" | "Azul" | "Amarillo" | "Cian" | "Magenta" | "Blanco" | "Negro" | "Gris" | "Rosa" | "Naranja" | "Violeta" | "Marrón" | "Turquesa" | "Lavanda" | "Coral" | "Oliva" | "Plata" | "Oro" | "Púrpura"
+        )> {System.out.println("color, " + image);}
 }
 TOKEN:
 {
-    <propiedad_componente:(
-        "IsEnabled"
-        |"Visibility"
-        |"Background"
-        |"BorderBrush"
-        |"BorderThickness"
-        |"Foreground"
-        |"Selected"
-        |"Opacity"
-        |"Width"
-        |"Height"
-        |"MinHeight"
-        |"MaxHeight"
-        |"MinWidth"
-        |"MaxWidth"
-        |"Margin"
-        |"HorizontalAlignment"
-        |"VerticalAlignment"
-        |"Padding"
-        |"FontFamily"
-        |"FontSize"
-        |"FontWight"
-        |"FontStrengh"
-        |"FontStyle"
-        |"TabIndex"
-        |"ToolTip"
-        |"Name"
-        |"Focusable"
-        )> {System.out.println("propiedad_componente, " + image);}
+    <propiedad:(
+        "IsEnabled"|"Visibility"|"Background"|"BorderBrush" |"BorderThickness"|"Foreground"|"Selected"|"Opacity"|"Width"|"Height"|"MinHeight"|"MaxHeight"|"MinWidth"|"MaxWidth"|"Margin"|"HorizontalAlignment"
+        |"VerticalAlignment"|"Padding"|"FontFamily"|"FontSize"|"FontWight"|"FontStrengh"|"FontStyle"|"TabIndex"|"ToolTip"|"Name"|"Focusable"
+        )> {System.out.println("propiedad, " + image);}
 }
 TOKEN:
 {
     <Numero:(<NUMERO>|<DECIMAL>)*>{System.out.println("Numero, "+image);}
+}
+TOKEN:
+{
+    <forma:("Círculo" | "Cuadrado" | "Triángulo" | "Rectángulo" | "Ovalo" | "Rombo" | "Estrella" | "Corazón" | "Hexágono" | "Pentágono" | "Trapecio" | "Paralelogramo")*>{System.out.println("forma, "+image);}
 }
 TOKEN:
 {
@@ -566,14 +477,12 @@ void analizar():
     |<corchete_izq>
     |<corchete_der>
     |<tipo_dato>
-    |<valor_booleano>
+    |<booleano>
     |<valor_nulo>
     |<operador_aritmetico>
     |<operador_asignacion>
     |<operador_relacional>
     |<operador_logico>
-    |<operador_pertenencia>
-    |<operador_identidad>
     |<definir_lista>
     |<funcion_cadena>
     |<funcion_matematica>
