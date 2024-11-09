@@ -8,12 +8,14 @@ class Analizador_Lexico
 	public static void main (String[] args) throws ParseException{
 	try
 	{
+        System.out.println("----------------------------------------- Iniciando escaneo -----------------------------------------");
 		Analizador_Lexico compilador = new Analizador_Lexico (System.in);
 		compilador.analizar();
+		System.out.println("----------------------------------------- Ejecucion Exitosa -----------------------------------------");
 	}catch(ParseException e)
 	{
 		System.out.println(e.getMessage());
-		System.out.println("ERROR");
+		System.out.println("----------------------------------------- Ha ocurrido un error -----------------------------------------");
 	}
   }
 }
@@ -32,19 +34,26 @@ SKIP :
 {
     " " | "\t" | "\n" | "\r"
 }
-TOKEN:{<comentarios:("//" | "#" | "--" )(<CADENA>)*>}
+TOKEN:
+{
+    <comentarios_unilinea:("//" | "#" | "--" )(<CADENA>)*>
 
+}
 TOKEN:
 {
     <comentarios_multilinea:(("/*")(<CADENA>)*("*/"))*>
 }
 TOKEN:
 {
-    <pregunta: ("if" | "elif")> {System.out.println("pregunta");}
+    <condicion_if: ("if")> {System.out.println("condicion_if");}
 }
 TOKEN:
 {
-    <alternativa:("else")> {System.out.println("alternativa");}
+    <condicion_elif:("elif")> {System.out.println("condicion_elif");}
+}
+TOKEN:
+{
+    <contracondicion:("else")> {System.out.println("contracondicion");}
 }
 TOKEN:
 {
@@ -52,15 +61,35 @@ TOKEN:
 }
 TOKEN:
 {
-    <ciclo:("while" | "do" | "for" | "foreach")> {System.out.println("ciclo");}
+    <condicion_while:("while")> {System.out.println("condicion_while");}
 }
 TOKEN:
 {
-    <detener_ciclo:("break")> {System.out.println("detener_ciclo");}
+    <ciclo_do:("do")> {System.out.println("ciclo_do");}
+}
+TOKEN:
+{
+    <ciclo_for:("for")> {System.out.println("ciclo_for");}
+}
+TOKEN:
+{
+    <ciclo_foreach:("foreach")> {System.out.println("ciclo_foreach");}
+}
+TOKEN:
+{
+    <romper_ciclo:("break")> {System.out.println("romper_ciclo");}
+}
+TOKEN:
+{
+    <continuar_siguiente_iteracion:("continue")> {System.out.println("continuar_siguiente_iteracion");}
 }
 TOKEN:
 {
     <caso_switch:("case")> {System.out.println("caso_switch");}
+}
+TOKEN:
+{
+    <caso_predefinido:("predef")> {System.out.println("caso_predefinido");}
 }
 TOKEN:
 {
@@ -108,7 +137,7 @@ TOKEN:
 }
 TOKEN:
 {
-    <operador_comparativo:(">"|"<"|"<="|">="|"=="|"!=")> {System.out.println("operador_comparativo, " + image);}
+    <operador_relacional:(">"|"<"|"<="|">="|"=="|"!=")> {System.out.println("operador_relacional, " + image);}
 }
 TOKEN:
 {
@@ -116,7 +145,19 @@ TOKEN:
 }
 TOKEN:
 {
+    <operador_pertenencia:("in"|"not in")> {System.out.println("operador_pertenencia, " + image);}
+}
+TOKEN:
+{
+    <operador_identidad:("is"|"is not")> {System.out.println("operador_identidad, " + image);}
+}
+TOKEN:
+{
     <definir_lista:("list")> {System.out.println("definir_lista");}
+}
+TOKEN:
+{
+    <funcion_cadena:("toUpper"|"toLower")> {System.out.println("funcion_cadena, " + image);}
 }
 TOKEN:
 {
@@ -124,7 +165,7 @@ TOKEN:
 }
 TOKEN:
 {
-    <rango:("range")> {System.out.println("rango");}
+    <funcion_generar_progresiones:("range")> {System.out.println("funcion_generar_progresiones");}
 }
 TOKEN:
 {
@@ -140,7 +181,11 @@ TOKEN:
 }
 TOKEN:
 {
-    <retornar_valor:("return")> {System.out.println("retornar_valor, " + image);}
+    <funcion_anonima:("lambda")> {System.out.println("funcion_anonima");}
+}
+TOKEN:
+{
+    <retornar_valor:("return"|"yield")> {System.out.println("retornar_valor, " + image);}
 }
 TOKEN:
 {
@@ -405,6 +450,86 @@ TOKEN:
 TOKEN:
 {
     <reiniciar:("RESET")> {System.out.println("reiniciar");}
+}
+TOKEN:
+{
+    <componente_visual:(
+        "Border"
+        |"Button"
+        |"Calendar"
+        |"Canvas"
+        |"CheckBox"
+        |"ComboBox"
+        |"ContentControl"
+        |"DataGrid"
+        |"DatePicker"
+        |"DockPanel"
+        |"DocumentViewer"
+        |"Ellipse"
+        |"Expander"
+        |"Frame"
+        |"Grid"
+        |"GridSplitter"
+        |"GroupBox"
+        |"Image"
+        |"Label"
+        |"ListBox"
+        |"ListView"
+        |"MediaElement"
+        |"Menu"
+        |"PasswordBox"
+        |"ProgressBar"
+        |"RadioButton"
+        |"Rectangle"
+        |"RichTextBox"
+        |"ScrollBar"
+        |"Slider"
+        |"StackPanel"
+        |"StatusBar"
+        |"TabControl"
+        |"TextBlock"
+        |"TextBox"
+        |"ToolBar"
+        |"ToolBarPanel"
+        |"ToolBarTray"
+        |"TreeView"
+        |"ViewBox"
+        |"WebBrowser"
+        |"WindowsFormHost"
+        |"WrapPanel"
+        )> {System.out.println("componente_visual, " + image);}
+}
+TOKEN:
+{
+    <propiedad_componente:(
+        "IsEnabled"
+        |"Visibility"
+        |"Background"
+        |"BorderBrush"
+        |"BorderThickness"
+        |"Foreground"
+        |"Selected"
+        |"Opacity"
+        |"Width"
+        |"Height"
+        |"MinHeight"
+        |"MaxHeight"
+        |"MinWidth"
+        |"MaxWidth"
+        |"Margin"
+        |"HorizontalAlignment"
+        |"VerticalAlignment"
+        |"Padding"
+        |"FontFamily"
+        |"FontSize"
+        |"FontWight"
+        |"FontStrengh"
+        |"FontStyle"
+        |"TabIndex"
+        |"ToolTip"
+        |"Name"
+        |"Focusable"
+        )> {System.out.println("propiedad_componente, " + image);}
 }
 TOKEN:
 {
