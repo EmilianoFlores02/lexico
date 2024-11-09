@@ -32,11 +32,8 @@ SKIP :
 {
     " " | "\t" | "\n" | "\r"
 }
-TOKEN:
-{
-    <comentarios_unilinea:("//" | "#" | "--" )(<CADENA>)*>
+TOKEN:{<comentarios:("//" | "#" | "--" )(<CADENA>)*>}
 
-}
 TOKEN:
 {
     <comentarios_multilinea:(("/*")(<CADENA>)*("*/"))*>
